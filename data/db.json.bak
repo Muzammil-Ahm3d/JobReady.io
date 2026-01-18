@@ -1,0 +1,332 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Generals",
+      "slug": "generals",
+      "order": 1,
+      "description": "General interview questions"
+    },
+    {
+      "id": 2,
+      "name": "HTML",
+      "slug": "html",
+      "order": 2,
+      "description": "HTML5 and Web Semantics"
+    },
+    {
+      "id": 3,
+      "name": "CSS",
+      "slug": "css",
+      "order": 3,
+      "description": "Styling, Flexbox, Grid, and Animations"
+    },
+    {
+      "id": 4,
+      "name": "JavaScript",
+      "slug": "javascript",
+      "order": 4,
+      "description": "Core JS, DOM, and Logic"
+    },
+    {
+      "id": 5,
+      "name": "ES6 Features",
+      "slug": "es6-features",
+      "order": 5,
+      "description": "Modern JavaScript features"
+    },
+    {
+      "id": 6,
+      "name": "React JS",
+      "slug": "react-js",
+      "order": 6,
+      "description": "Components, Hooks, and Virtual DOM"
+    },
+    {
+      "id": 7,
+      "name": "Redux",
+      "slug": "redux",
+      "order": 7,
+      "description": "State Management"
+    },
+    {
+      "id": 8,
+      "name": "Node JS",
+      "slug": "node-js",
+      "order": 8,
+      "description": "Runtime interaction and APIs"
+    },
+    {
+      "id": 9,
+      "name": "Express JS",
+      "slug": "express-js",
+      "order": 9,
+      "description": "Backend Framework"
+    },
+    {
+      "id": 10,
+      "name": "Restful API",
+      "slug": "restful-api",
+      "order": 10,
+      "description": "API Design and Standards"
+    },
+    {
+      "id": 11,
+      "name": "Microservices",
+      "slug": "microservices",
+      "order": 11,
+      "description": "Distributed architectures"
+    },
+    {
+      "id": 12,
+      "name": "JWT",
+      "slug": "jwt",
+      "order": 12,
+      "description": "JSON Web Tokens and Security"
+    },
+    {
+      "id": 13,
+      "name": "Axios",
+      "slug": "axios",
+      "order": 13,
+      "description": "HTTP Client"
+    },
+    {
+      "id": 14,
+      "name": "Java",
+      "slug": "java",
+      "order": 14,
+      "description": "Core Java concepts"
+    },
+    {
+      "id": 15,
+      "name": "Spring Framework",
+      "slug": "spring-framework",
+      "order": 15,
+      "description": "Enterprise Java Framework"
+    },
+    {
+      "id": 16,
+      "name": "Spring Data JPA / Hibernate",
+      "slug": "spring-data-jpa-hibernate",
+      "order": 16,
+      "description": "ORM and Database Access"
+    },
+    {
+      "id": 17,
+      "name": "Spring Boot",
+      "slug": "spring-boot",
+      "order": 17,
+      "description": "Rapid Application Development"
+    },
+    {
+      "id": 18,
+      "name": "Spring Cloud & Microservices",
+      "slug": "spring-cloud-microservices",
+      "order": 18,
+      "description": "Cloud-native Java"
+    },
+    {
+      "id": 19,
+      "name": "Kafka",
+      "slug": "kafka",
+      "order": 19,
+      "description": "Event streaming"
+    },
+    {
+      "id": 20,
+      "name": "SQL",
+      "slug": "sql",
+      "order": 20,
+      "description": "Database queries and design"
+    },
+    {
+      "id": 21,
+      "name": "Python",
+      "slug": "python",
+      "order": 21,
+      "description": "Python scripting and data"
+    },
+    {
+      "id": 22,
+      "name": "Django",
+      "slug": "django",
+      "order": 22,
+      "description": "High-level Python Web Framework"
+    },
+    {
+      "id": 23,
+      "name": "Fast API",
+      "slug": "fast-api",
+      "order": 23,
+      "description": "Modern Python APIs"
+    },
+    {
+      "id": 24,
+      "name": "PySpark",
+      "slug": "pyspark",
+      "order": 24,
+      "description": "Big Data processing"
+    },
+    {
+      "id": 25,
+      "name": "Flask API",
+      "slug": "flask-api",
+      "order": 25,
+      "description": "Lightweight Python Framework"
+    },
+    {
+      "id": 26,
+      "name": ".NET",
+      "slug": "dotnet",
+      "order": 26,
+      "description": ".NET Framework"
+    },
+    {
+      "id": 27,
+      "name": "ASP.NET",
+      "slug": "asp-net",
+      "order": 27,
+      "description": "Web App Framework"
+    },
+    {
+      "id": 28,
+      "name": "JPA.NET",
+      "slug": "jpa-net",
+      "order": 28,
+      "description": "JPA implementation"
+    },
+    {
+      "id": 29,
+      "name": "Power BI",
+      "slug": "power-bi",
+      "order": 29,
+      "description": "Business Analytics"
+    },
+    {
+      "id": 30,
+      "name": "Tableau",
+      "slug": "tableau",
+      "order": 30,
+      "description": "Data Visualization"
+    },
+    {
+      "id": 31,
+      "name": "DAX",
+      "slug": "dax",
+      "order": 31,
+      "description": "Data Analysis Expressions"
+    },
+    {
+      "id": 32,
+      "name": "Cybersecurity",
+      "slug": "cybersecurity",
+      "order": 32,
+      "description": "Security principles"
+    },
+    {
+      "id": 33,
+      "name": "Git/GitHub",
+      "slug": "git-github",
+      "order": 33,
+      "description": "Version Control"
+    },
+    {
+      "id": 34,
+      "name": "Jenkins",
+      "slug": "jenkins",
+      "order": 34,
+      "description": "CI/CD Automation"
+    },
+    {
+      "id": 35,
+      "name": "Docker",
+      "slug": "docker",
+      "order": 35,
+      "description": "Containerization"
+    },
+    {
+      "id": 36,
+      "name": "Kubernetes",
+      "slug": "kubernetes",
+      "order": 36,
+      "description": "Container Orchestration"
+    },
+    {
+      "id": 37,
+      "name": "Terraform",
+      "slug": "terraform",
+      "order": 37,
+      "description": "Infrastructure as Code"
+    },
+    {
+      "id": 38,
+      "name": "SonarQube",
+      "slug": "sonarqube",
+      "order": 38,
+      "description": "Code Quality"
+    },
+    {
+      "id": 39,
+      "name": "Graphana",
+      "slug": "graphana",
+      "order": 39,
+      "description": "Monitoring and Observability"
+    },
+    {
+      "id": 40,
+      "name": "Manual Testing",
+      "slug": "manual-testing",
+      "order": 40,
+      "description": "QA Basics"
+    },
+    {
+      "id": 41,
+      "name": "Automation Testing",
+      "slug": "automation-testing",
+      "order": 41,
+      "description": "Selenium, Cypress, etc."
+    },
+    {
+      "id": 42,
+      "name": "AWS",
+      "slug": "aws",
+      "order": 42,
+      "description": "Amazon Web Services"
+    },
+    {
+      "id": 43,
+      "name": "Azure",
+      "slug": "azure",
+      "order": 43,
+      "description": "Microsoft Cloud"
+    },
+    {
+      "id": 44,
+      "name": "Core Java",
+      "slug": "core-java",
+      "order": 44,
+      "description": "Java fundamentals"
+    },
+    {
+      "id": 45,
+      "name": "Java8 Features",
+      "slug": "java8-features",
+      "order": 45,
+      "description": "Lambdas and Streams"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "categoryId": 14,
+      "title": "What is Java?",
+      "slug": "what-is-java",
+      "answer": "Java is a class-based, object-oriented programming language.",
+      "displayOrder": 1,
+      "useCases": "Enterprise apps",
+      "realTimeUseCases": "Banking systems"
+    }
+  ],
+  "tags": []
+}
