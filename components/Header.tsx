@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import SearchBar from './SearchBar';
 import styles from './Header.module.css';
 import { getCategories } from '@/lib/db';
@@ -17,7 +18,9 @@ export default async function Header() {
                         <Link key={cat.id} href={`/${cat.slug}`} className={styles.navLink}>{cat.name}</Link>
                     ))}
                 </nav>
-                <SearchBar />
+                <Suspense fallback={<div style={{ width: '300px' }} />}>
+                    <SearchBar />
+                </Suspense>
             </div>
         </header>
     );
