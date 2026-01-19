@@ -4,6 +4,9 @@ import SchemaJSON from '@/components/SchemaJSON';
 import CodeBlock from '@/components/CodeBlock';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
+
 export default async function QuestionPage({ params }: { params: Promise<{ category: string; question: string }> }) {
     const { category: categorySlug, question: questionSlug } = await params;
     const questions = await getQuestions(categorySlug);

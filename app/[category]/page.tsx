@@ -2,6 +2,9 @@ import { getDB, getQuestions } from '@/lib/db';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
+
+export const dynamic = 'force-dynamic';
+
 import { Metadata } from 'next';
 
 type Props = {

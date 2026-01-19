@@ -38,31 +38,26 @@ function isVercelBlobEnabled(): boolean {
 
 // --- Vercel Blob Helpers ---
 async function getBlobUrl(): Promise<string | null> {
-    try {
-        const { blobs } = await list({
-            prefix: BLOB_FILENAME,
-            token: process.env.BLOB_READ_WRITE_TOKEN,
-        });
-        const dbBlob = blobs.find(b => b.pathname === BLOB_FILENAME);
-        return dbBlob?.url || null;
-    } catch (e) {
-        console.warn('⚠️ Could not list blobs:', e);
-        return null;
-    }
+    // This allows errors to propagate so we don't accidentally assume "not found" on network error
+    const { blobs } = await list({
+        prefix: BLOB_FILENAME,
+        token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
+    const dbBlob = blobs.find(b => b.pathname === BLOB_FILENAME);
+    return dbBlob?.url || null;
 }
 
 async function getDBFromBlob(): Promise<DB | null> {
-    try {
-        const url = await getBlobUrl();
-        if (!url) return null;
+    const url = await getBlobUrl();
+    if (!url) return null; // Blob does not exist
 
-        const response = await fetch(url, { cache: 'no-store' });
-        if (!response.ok) return null;
-        return await response.json();
-    } catch (e) {
-        console.warn('⚠️ Could not read from blob:', e);
-        return null;
+    // CACHE: 'no-store' is CRITICAL to ensure we always get the latest data
+    const response = await fetch(url, { cache: 'no-store' });
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch DB from Blob: ${response.status} ${response.statusText}`);
     }
+    return await response.json();
 }
 
 async function saveDBToBlob(db: DB): Promise<boolean> {
@@ -71,7 +66,7 @@ async function saveDBToBlob(db: DB): Promise<boolean> {
             access: 'public',
             addRandomSuffix: false, // Keep the same filename
             token: process.env.BLOB_READ_WRITE_TOKEN,
-            // @ts-ignore - The error message suggests this option exists even if types are outdated
+            // @ts-ignore
             allowOverwrite: true,
         });
         return true;
@@ -111,13 +106,26 @@ async function saveDBToLocal(db: DB): Promise<boolean> {
 
 export async function getDB(): Promise<DB> {
     if (isVercelBlobEnabled()) {
-        const blobDB = await getDBFromBlob();
-        if (blobDB) return blobDB;
-        // Fallback: Initialize blob from local file if blob is empty
-        console.log('📦 Blob empty, initializing from local...');
-        const localDB = await getDBFromLocal();
-        await saveDBToBlob(localDB);
-        return localDB;
+        try {
+            const blobDB = await getDBFromBlob();
+            if (blobDB) return blobDB;
+
+            // If we are here, it means no Blob URL was found (blob doesn't exist).
+            // ONLY then do we initialize from local.
+            console.log('📦 Blob not found, initializing from local...');
+            const localDB = await getDBFromLocal();
+            await saveDBToBlob(localDB);
+            return localDB;
+
+        } catch (error) {
+            console.error('🔥 Critical Error loading DB from Blob:', error);
+            // FAIL SAFE: Do NOT fall back to local if there was an error (e.g. network/parse)
+            // This prevents overwriting the cloud DB with local data during a glitch.
+            // But we must return *something* or the app crashes. 
+            // Better to crash than to lose data? 
+            // For now, let's rethrow to alert the issue rather than silently returning empty/stale data.
+            throw error;
+        }
     }
     return getDBFromLocal();
 }

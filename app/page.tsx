@@ -1,5 +1,8 @@
 import Link from 'next/link';
 import { getCategoriesWithCount, getQuestions } from '@/lib/db';
+
+export const dynamic = 'force-dynamic';
+
 import styles from './page.module.css';
 import { Metadata } from 'next';
 
