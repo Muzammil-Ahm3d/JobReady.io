@@ -61,7 +61,8 @@ export default function ChatBot() {
                     source: data.source
                 }]);
             } else {
-                setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, I encountered an error searching for that.' }]);
+                console.error('Chat API Error:', data.error, data.details);
+                setMessages(prev => [...prev, { role: 'bot', text: `Error: ${data.error || 'Unknown error'}` }]);
             }
         } catch (err) {
             setMessages(prev => [...prev, { role: 'bot', text: 'Network error. Please try again.' }]);
