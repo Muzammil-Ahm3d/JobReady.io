@@ -1,26 +1,6 @@
-
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const DB_PATH = path.join(process.cwd(), 'data', 'db.json');
-
-// --- Types ---
-type Question = {
-    id: number;
-    categoryId: number;
-    title: string;
-    slug: string;
-    answer: string;
-    useCases?: string;
-    realTimeUseCases?: string;
-};
-
-type DB = {
-    questions: Question[];
-    categories: any[];
-};
+import { getDB, saveDB, Question } from '@/lib/db';
 
 export async function POST(req: Request) {
     try {
@@ -30,8 +10,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid query' }, { status: 400 });
         }
 
-        const dbContent = await fs.readFile(DB_PATH, 'utf-8');
-        const db: DB = JSON.parse(dbContent);
+        const db = await getDB();
 
         // 1. Search Local DB
         const lowerQuery = query.toLowerCase();
@@ -106,16 +85,17 @@ export async function POST(req: Request) {
             title: aiData.title || query,
             slug: (aiData.title || query).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
             answer: aiData.answer,
+            displayOrder: db.questions.length + 1,
             useCases: aiData.useCases,
             realTimeUseCases: aiData.realTimeUseCases
         };
 
         db.questions.push(newQuestion);
-        try {
-            await fs.writeFile(DB_PATH, JSON.stringify(db, null, 2));
-        } catch (writeError) {
-            console.warn('⚠️ Could not save to local DB (likely read-only fs):', writeError);
-            // We do NOT rethrow, so we can still return the answer to the user
+
+        // Save using the smart saveDB (works on both Vercel and Hostinger)
+        const saved = await saveDB(db);
+        if (!saved) {
+            console.warn('⚠️ Could not persist to storage, but returning answer anyway');
         }
 
         return NextResponse.json({

@@ -1,7 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { put, head, list } from '@vercel/blob';
 
 const DB_PATH = path.join(process.cwd(), 'data', 'db.json');
+const BLOB_FILENAME = 'db.json';
 
 export type Category = {
     id: number;
@@ -27,8 +29,52 @@ export type DB = {
     questions: Question[];
 };
 
-// Ensure data dir exists
-async function ensureDB() {
+// Check if we're on Vercel (has BLOB token)
+function isVercelBlobEnabled(): boolean {
+    return !!process.env.BLOB_READ_WRITE_TOKEN;
+}
+
+// --- Vercel Blob Helpers ---
+async function getBlobUrl(): Promise<string | null> {
+    try {
+        const { blobs } = await list({ prefix: BLOB_FILENAME });
+        const dbBlob = blobs.find(b => b.pathname === BLOB_FILENAME);
+        return dbBlob?.url || null;
+    } catch (e) {
+        console.warn('⚠️ Could not list blobs:', e);
+        return null;
+    }
+}
+
+async function getDBFromBlob(): Promise<DB | null> {
+    try {
+        const url = await getBlobUrl();
+        if (!url) return null;
+
+        const response = await fetch(url);
+        if (!response.ok) return null;
+        return await response.json();
+    } catch (e) {
+        console.warn('⚠️ Could not read from blob:', e);
+        return null;
+    }
+}
+
+async function saveDBToBlob(db: DB): Promise<boolean> {
+    try {
+        await put(BLOB_FILENAME, JSON.stringify(db, null, 2), {
+            access: 'public',
+            addRandomSuffix: false, // Keep the same filename
+        });
+        return true;
+    } catch (e) {
+        console.warn('⚠️ Could not save to blob:', e);
+        return false;
+    }
+}
+
+// --- Local File Helpers ---
+async function ensureLocalDB() {
     try {
         await fs.access(DB_PATH);
     } catch {
@@ -37,14 +83,42 @@ async function ensureDB() {
     }
 }
 
-export async function getDB(): Promise<DB> {
-    await ensureDB();
+async function getDBFromLocal(): Promise<DB> {
+    await ensureLocalDB();
     const data = await fs.readFile(DB_PATH, 'utf-8');
     return JSON.parse(data);
 }
 
-export async function saveDB(db: DB) {
-    await fs.writeFile(DB_PATH, JSON.stringify(db, null, 2));
+async function saveDBToLocal(db: DB): Promise<boolean> {
+    try {
+        await fs.writeFile(DB_PATH, JSON.stringify(db, null, 2));
+        return true;
+    } catch (e) {
+        console.warn('⚠️ Could not save to local file:', e);
+        return false;
+    }
+}
+
+// --- Public API (auto-selects storage based on environment) ---
+
+export async function getDB(): Promise<DB> {
+    if (isVercelBlobEnabled()) {
+        const blobDB = await getDBFromBlob();
+        if (blobDB) return blobDB;
+        // Fallback: Initialize blob from local file if blob is empty
+        console.log('📦 Blob empty, initializing from local...');
+        const localDB = await getDBFromLocal();
+        await saveDBToBlob(localDB);
+        return localDB;
+    }
+    return getDBFromLocal();
+}
+
+export async function saveDB(db: DB): Promise<boolean> {
+    if (isVercelBlobEnabled()) {
+        return saveDBToBlob(db);
+    }
+    return saveDBToLocal(db);
 }
 
 // Helpers
