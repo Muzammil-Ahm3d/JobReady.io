@@ -39,7 +39,10 @@ function isVercelBlobEnabled(): boolean {
 // --- Vercel Blob Helpers ---
 async function getBlobUrl(): Promise<string | null> {
     try {
-        const { blobs } = await list({ prefix: BLOB_FILENAME });
+        const { blobs } = await list({
+            prefix: BLOB_FILENAME,
+            token: process.env.BLOB_READ_WRITE_TOKEN,
+        });
         const dbBlob = blobs.find(b => b.pathname === BLOB_FILENAME);
         return dbBlob?.url || null;
     } catch (e) {
@@ -67,6 +70,9 @@ async function saveDBToBlob(db: DB): Promise<boolean> {
         await put(BLOB_FILENAME, JSON.stringify(db, null, 2), {
             access: 'public',
             addRandomSuffix: false, // Keep the same filename
+            token: process.env.BLOB_READ_WRITE_TOKEN,
+            // @ts-ignore - The error message suggests this option exists even if types are outdated
+            allowOverwrite: true,
         });
         return true;
     } catch (e) {
