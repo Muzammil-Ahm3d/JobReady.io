@@ -53,7 +53,7 @@ async function getDBFromBlob(): Promise<DB | null> {
         const url = await getBlobUrl();
         if (!url) return null;
 
-        const response = await fetch(url);
+        const response = await fetch(url, { cache: 'no-store' });
         if (!response.ok) return null;
         return await response.json();
     } catch (e) {

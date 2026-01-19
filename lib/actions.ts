@@ -61,6 +61,8 @@ export async function createQuestion(formData: FormData) {
     // Revalidate category page
     const cat = db.categories.find(c => c.id === categoryId);
     if (cat) revalidatePath(`/${cat.slug}`);
+    revalidatePath('/admin/questions');
+    revalidatePath('/');
 
     redirect('/admin/questions');
 }
