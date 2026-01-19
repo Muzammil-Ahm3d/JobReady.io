@@ -111,7 +111,12 @@ export async function POST(req: Request) {
         };
 
         db.questions.push(newQuestion);
-        await fs.writeFile(DB_PATH, JSON.stringify(db, null, 2));
+        try {
+            await fs.writeFile(DB_PATH, JSON.stringify(db, null, 2));
+        } catch (writeError) {
+            console.warn('⚠️ Could not save to local DB (likely read-only fs):', writeError);
+            // We do NOT rethrow, so we can still return the answer to the user
+        }
 
         return NextResponse.json({
             answer: newQuestion.answer,
