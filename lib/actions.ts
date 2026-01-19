@@ -52,6 +52,8 @@ export async function createQuestion(formData: FormData) {
         displayOrder: db.questions.length + 1,
         useCases: formData.get('useCases') as string || undefined,
         realTimeUseCases: formData.get('realTimeUseCases') as string || undefined,
+        imageUrl: formData.get('imageUrl') as string || undefined,
+        codeSnippet: formData.get('codeSnippet') as string || undefined,
     };
 
     db.questions.push(newQ);

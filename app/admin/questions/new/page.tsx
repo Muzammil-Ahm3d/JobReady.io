@@ -22,8 +22,16 @@ export default async function NewQuestion() {
                     <input name="title" type="text" required style={{ width: '100%', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '6px' }} />
                 </div>
                 <div>
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Image URL (Optional)</label>
+                    <input name="imageUrl" type="text" placeholder="https://..." style={{ width: '100%', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '6px' }} />
+                </div>
+                <div>
                     <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Answer (Markdown supported)</label>
                     <textarea name="answer" rows={8} required style={{ width: '100%', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '6px', fontFamily: 'monospace' }} />
+                </div>
+                <div>
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Code Snippet (Optional)</label>
+                    <textarea name="codeSnippet" rows={6} style={{ width: '100%', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '6px', fontFamily: 'monospace', backgroundColor: '#f8fafc' }} placeholder="// Paste your code here..." />
                 </div>
                 <div>
                     <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Use Cases (Optional)</label>

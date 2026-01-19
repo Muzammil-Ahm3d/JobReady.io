@@ -22,6 +22,8 @@ export type Question = {
     displayOrder: number;
     useCases?: string;
     realTimeUseCases?: string;
+    imageUrl?: string;
+    codeSnippet?: string;
 };
 
 export type DB = {
