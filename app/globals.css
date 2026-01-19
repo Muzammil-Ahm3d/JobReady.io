@@ -1,6 +1,30 @@
 :root {
-    --background: #ffffff;
-    --foreground: #0f172a;
+    /* Professional Blue Theme */
+    --primary: #0066cc;
+    /* Brand Blue */
+    --primary-hover: #004c99;
+    /* Darker Interaction Blue */
+    --primary-light: #e6f2ff;
+    /* Very Light Background Blue */
+
+    --secondary: #3b82f6;
+    /* Accent Blue (lighter/brighter) */
+
+    --background-page: #f8fafc;
+    /* Cool Slate White */
+    --background-card: #ffffff;
+
+    --text-main: #0f172a;
+    /* Deep Navy/Black */
+    --text-muted: #64748b;
+    /* Muted Slate */
+    --text-on-primary: #ffffff;
+
+    --border-subtle: #e2e8f0;
+    --border-focus: #0066cc;
+
+    --foreground: var(--text-main);
+    --background: var(--background-page);
 }
 
 * {

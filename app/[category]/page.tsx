@@ -51,7 +51,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             <div className={styles.header}>
                 <h1 className={styles.title}>{category.name} Interview Questions</h1>
                 <p className={styles.desc}>{category.description}</p>
-                {q && <p style={{ marginTop: '1rem', color: '#64748b' }}>Found {catQuestions.length} result(s) for "{q}"</p>}
+                {q && <p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>Found {catQuestions.length} result(s) for "{q}"</p>}
             </div>
 
             <div className={styles.list}>
@@ -70,7 +70,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             </div>
             {q && (
                 <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                    <Link href={`/${categorySlug}`} style={{ color: '#3b82f6', textDecoration: 'underline' }}>Clear Search</Link>
+                    <Link href={`/${categorySlug}`} style={{ color: 'var(--secondary)', textDecoration: 'underline' }}>Clear Search</Link>
                 </div>
             )}
         </div>

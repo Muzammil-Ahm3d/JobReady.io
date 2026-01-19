@@ -43,13 +43,13 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
                         </Link>
                     ))}
                     {results.length === 0 && (
-                        <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#64748b' }}>
+                        <div style={{ gridColumn: '1/-1', textAlign: 'center', color: 'var(--text-muted)' }}>
                             No questions found matching your query.
                         </div>
                     )}
                 </div>
                 <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                    <Link href="/" style={{ color: '#3b82f6', textDecoration: 'underline' }}>Back to Home</Link>
+                    <Link href="/" style={{ color: 'var(--secondary)', textDecoration: 'underline' }}>Back to Home</Link>
                 </div>
             </div>
         );

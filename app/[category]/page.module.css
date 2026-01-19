@@ -14,12 +14,12 @@
     font-weight: 800;
     text-transform: capitalize;
     margin-bottom: 1rem;
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .desc {
     font-size: 1.125rem;
-    color: #64748b;
+    color: var(--text-muted);
     max-width: 600px;
     margin: 0 auto;
 }
@@ -33,33 +33,33 @@
 .questionLink {
     display: block;
     padding: 1.5rem;
-    background: white;
-    border: 1px solid #e2e8f0;
+    background: var(--background-card);
+    border: 1px solid var(--border-subtle);
     border-radius: 8px;
     transition: all 0.2s;
 }
 
 .questionLink:hover {
     transform: translateX(4px);
-    border-color: #94a3b8;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-color: var(--primary);
+    box-shadow: 0 4px 6px -1px rgba(0, 102, 204, 0.1);
 }
 
 .qTitle {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--text-main);
     margin-bottom: 0.25rem;
 }
 
 .qMeta {
     font-size: 0.875rem;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .empty {
     text-align: center;
     padding: 4rem;
-    color: #94a3b8;
+    color: var(--text-muted);
     font-size: 1.125rem;
 }

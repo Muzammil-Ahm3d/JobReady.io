@@ -8,14 +8,14 @@
     font-size: 3rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
-    color: #0f172a;
+    color: var(--text-main);
     letter-spacing: -0.05em;
     line-height: 1.1;
 }
 
 .subtitle {
     font-size: 1.25rem;
-    color: #64748b;
+    color: var(--text-muted);
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
@@ -31,29 +31,30 @@
 }
 
 .card {
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-subtle);
     border-radius: 12px;
     padding: 1.5rem;
     transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-    background: white;
+    background: var(--background-card);
     display: block;
 }
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
-    border-color: #94a3b8;
+    box-shadow: 0 10px 15px -3px rgba(0, 102, 204, 0.1), 0 4px 6px -2px rgba(0, 102, 204, 0.05);
+    /* Blue tinted shadow */
+    border-color: var(--primary);
 }
 
 .cardTitle {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .cardDesc {
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 0.875rem;
     line-height: 1.5;
 }
@@ -62,11 +63,11 @@
     margin-top: 1.5rem;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #3b82f6;
+    color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     display: inline-block;
     padding: 0.25rem 0.5rem;
-    background: #eff6ff;
+    background: var(--primary-light);
     border-radius: 4px;
 }

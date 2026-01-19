@@ -1,7 +1,7 @@
 .container {
     display: flex;
     min-height: 100vh;
-    background: #f8fafc;
+    background: var(--background-page);
 }
 
 .sidebar {
@@ -31,7 +31,7 @@
 .navLink {
     padding: 0.75rem 1rem;
     border-radius: 6px;
-    color: #94a3b8;
+    color: var(--text-muted);
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s;
@@ -40,7 +40,8 @@
 .navLink:hover,
 .activeLink {
     background: #334155;
-    color: white;
+    /* Keep dark sidebar contrast */
+    color: var(--text-on-primary);
 }
 
 .main {
@@ -59,7 +60,7 @@
 .pageTitle {
     font-size: 2rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .grid {
@@ -69,23 +70,23 @@
 }
 
 .card {
-    background: white;
+    background: var(--background-card);
     padding: 1.5rem;
     border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-subtle);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .statLabel {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .statValue {
     font-size: 2.25rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--text-main);
     margin-top: 0.5rem;
 }
 
@@ -96,8 +97,8 @@
     padding: 0.5rem 1rem;
     border-radius: 6px;
     font-weight: 500;
-    background: #0f172a;
-    color: white;
+    background: var(--primary);
+    color: var(--text-on-primary);
     border: none;
     cursor: pointer;
     text-decoration: none;

@@ -69,33 +69,33 @@ export default function ChatBot() {
                     right: '0',
                     width: '350px',
                     height: '500px',
-                    backgroundColor: 'white',
+                    backgroundColor: 'var(--background-card)',
                     borderRadius: '12px',
                     boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
                     display: 'flex',
                     flexDirection: 'column',
                     overflow: 'hidden',
-                    border: '1px solid #e2e8f0'
+                    border: '1px solid var(--border-subtle)'
                 }}>
                     {/* Header */}
-                    <div style={{ background: '#2563eb', color: 'white', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ background: 'var(--primary)', color: 'var(--text-on-primary)', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <FaRobot size={20} />
                             <span style={{ fontWeight: 600 }}>JobReady Bot</span>
                         </div>
-                        <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
+                        <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', color: 'var(--text-on-primary)', cursor: 'pointer' }}>
                             <FaTimes size={16} />
                         </button>
                     </div>
 
                     {/* Messages */}
-                    <div style={{ flex: 1, padding: '1rem', overflowY: 'auto', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    <div style={{ flex: 1, padding: '1rem', overflowY: 'auto', background: 'var(--background-page)', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                         {messages.map((m, i) => (
                             <div key={i} style={{
                                 alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
                                 maxWidth: '80%',
-                                background: m.role === 'user' ? '#2563eb' : 'white',
-                                color: m.role === 'user' ? 'white' : '#1e293b',
+                                background: m.role === 'user' ? 'var(--primary)' : 'var(--background-card)',
+                                color: m.role === 'user' ? 'var(--text-on-primary)' : 'var(--text-main)',
                                 padding: '0.75rem 1rem',
                                 borderRadius: '12px',
                                 borderBottomRightRadius: m.role === 'user' ? '2px' : '12px',
@@ -113,7 +113,7 @@ export default function ChatBot() {
                             </div>
                         ))}
                         {isLoading && (
-                            <div style={{ alignSelf: 'flex-start', background: 'white', padding: '0.75rem', borderRadius: '12px', color: '#64748b' }}>
+                            <div style={{ alignSelf: 'flex-start', background: 'var(--background-card)', padding: '0.75rem', borderRadius: '12px', color: 'var(--text-muted)' }}>
                                 <FaCommentDots className="animate-pulse" /> Thinking...
                             </div>
                         )}
@@ -121,20 +121,21 @@ export default function ChatBot() {
                     </div>
 
                     {/* Input */}
-                    <form onSubmit={handleSearch} style={{ padding: '1rem', borderTop: '1px solid #e2e8f0', background: 'white', display: 'flex', gap: '0.5rem' }}>
+                    <form onSubmit={handleSearch} style={{ padding: '1rem', borderTop: '1px solid var(--border-subtle)', background: 'var(--background-card)', display: 'flex', gap: '0.5rem' }}>
                         <input
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Ask a question..."
-                            style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }}
+                            style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-subtle)', outline: 'none' }}
                         />
-                        <button type="submit" disabled={isLoading} style={{ background: '#2563eb', color: 'white', border: 'none', borderRadius: '8px', width: '40px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <button type="submit" disabled={isLoading} style={{ background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: '8px', width: '40px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <FaPaperPlane />
                         </button>
                     </form>
                 </div>
-            )}
+            )
+            }
 
             {/* Toggle Button */}
             <button
@@ -143,10 +144,10 @@ export default function ChatBot() {
                     width: '60px',
                     height: '60px',
                     borderRadius: '50%',
-                    background: '#2563eb',
-                    color: 'white',
+                    background: 'var(--primary)',
+                    color: 'var(--text-on-primary)',
                     border: 'none',
-                    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
+                    boxShadow: '0 4px 12px rgba(0, 102, 204, 0.3)',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
@@ -158,6 +159,6 @@ export default function ChatBot() {
             >
                 {isOpen ? <FaTimes size={24} /> : <FaRobot size={28} />}
             </button>
-        </div>
+        </div >
     );
 }
