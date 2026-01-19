@@ -45,14 +45,16 @@ export async function POST(req: Request) {
         const prompt = `You are a helpful coding assistant for JobReady.io. 
         User Question: "${query}"
         
-        Provide a concise, clear technical answer (max 3-4 sentences). 
-        Format content with Markdown if needed.
-        Also provide 1-2 "Real Time Use Cases" if applicable.
+        Provide a concise, clear technical answer.
+        - If the user asks for code, provide a "codeSnippet" in the JSON.
+        - Use Markdown for the answer body (bold, lists).
+        - Also provide 1-2 "Real Time Use Cases".
         
         Output format (JSON):
         {
             "title": "Refined Question Title",
-            "answer": "The answer body...",
+            "answer": "The answer body (markdown allowed)...",
+            "codeSnippet": "Optional code block content...",
             "useCases": "Bullet point 1...",
             "realTimeUseCases": "Bullet point 1..."
         }`;
@@ -72,7 +74,8 @@ export async function POST(req: Request) {
                 title: query,
                 answer: text,
                 useCases: '',
-                realTimeUseCases: ''
+                realTimeUseCases: '',
+                codeSnippet: ''
             };
         }
 
@@ -87,7 +90,8 @@ export async function POST(req: Request) {
             answer: aiData.answer,
             displayOrder: db.questions.length + 1,
             useCases: aiData.useCases,
-            realTimeUseCases: aiData.realTimeUseCases
+            realTimeUseCases: aiData.realTimeUseCases,
+            codeSnippet: aiData.codeSnippet
         };
 
         db.questions.push(newQuestion);
