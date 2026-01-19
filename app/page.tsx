@@ -60,7 +60,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
 
     // Default Home Mode
     const categories = await getCategoriesWithCount();
-    const visibleCategories = categories.filter(c => c.slug !== 'ai-knowledge-base');
+    const visibleCategories = categories;
 
     return (
         <div>
