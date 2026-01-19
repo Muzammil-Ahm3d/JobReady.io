@@ -34,14 +34,23 @@ export default function ChatBot() {
 
         const userText = query;
         setQuery('');
-        setMessages(prev => [...prev, { role: 'user', text: userText }]);
+
+        // Optimistic update
+        const newHistory = [...messages, { role: 'user', text: userText } as Message];
+        setMessages(newHistory);
         setIsLoading(true);
+
+        // Prepare context (last 10 messages to save tokens)
+        const historyContext = newHistory.slice(-10).map(m => ({
+            role: m.role,
+            content: m.text
+        }));
 
         try {
             const res = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: userText }),
+                body: JSON.stringify({ messages: historyContext }),
             });
             const data = await res.json();
 

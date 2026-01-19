@@ -4,35 +4,48 @@ import { getDB, saveDB, Question } from '@/lib/db';
 
 export async function POST(req: Request) {
     try {
-        const { query } = await req.json();
+        const { messages } = await req.json();
 
-        if (!query || typeof query !== 'string') {
-            return NextResponse.json({ error: 'Invalid query' }, { status: 400 });
+        if (!messages || !Array.isArray(messages) || messages.length === 0) {
+            return NextResponse.json({ error: 'Invalid messages format' }, { status: 400 });
         }
+
+        const lastMessage = messages[messages.length - 1];
+        const query = lastMessage.content;
+
+        // Construct conversation history for context
+        // We limit to last 6 messages for context window efficiency
+        const history = messages.slice(-6).map((m: any) =>
+            `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
+        ).join('\n');
 
         const db = await getDB();
 
-        // 1. Search Local DB
+        // 1. Search Local DB (Only checks the LATEST question)
         const lowerQuery = query.toLowerCase();
 
         // Simple relevance score: matches key words or phrase
         const match = db.questions.find(q => {
             const titleMatch = q.title.toLowerCase().includes(lowerQuery);
-            // Exact word match is better, but partial match is okay for now
             return titleMatch;
         });
 
-        if (match) {
+        // Note: For "contextual" queries like "give me code for that", local search might fail 
+        // because "that" is not a keyword. In a real vector DB we'd use embeddings. 
+        // Here, if local search fails, we fall back to AI which DOES have context.
+
+        if (match && query.length > 10) { // Only use local match if query seems substantial
             console.log(`🤖 Local Hit for: "${query}" -> "${match.title}"`);
             return NextResponse.json({
                 answer: match.answer,
                 source: 'local',
-                question: match.title
+                question: match.title,
+                codeSnippet: match.codeSnippet
             });
         }
 
-        // 2. AI Fallback
-        console.log(`🤖 Local Miss for: "${query}" -> Calling Gemini...`);
+        // 2. AI Fallback (With Context)
+        console.log(`🤖 Local Miss -> AI Context Search`);
 
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
@@ -42,24 +55,25 @@ export async function POST(req: Request) {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-        const prompt = `You are a helpful coding assistant for JobReady.io. 
-        User Question: "${query}"
+        const systemPrompt = `You are a helpful coding assistant for JobReady.io. 
         
-        Provide a concise, clear technical answer.
-        - If the user asks for code, provide a "codeSnippet" in the JSON.
-        - Use Markdown for the answer body (bold, lists).
-        - Also provide 1-2 "Real Time Use Cases".
+        Current Conversation History:
+        ${history}
+        
+        Task: Answer the LAST User message based on the history above.
+        - If the user refers to previous code/topics (e.g., "rewrite that", "give me code for it"), use the context.
+        - Output strict JSON.
         
         Output format (JSON):
         {
-            "title": "Refined Question Title",
+            "title": "Refined Question Title (based on context)",
             "answer": "The answer body (markdown allowed)...",
             "codeSnippet": "Optional code block content...",
             "useCases": "Bullet point 1...",
             "realTimeUseCases": "Bullet point 1..."
         }`;
 
-        const result = await model.generateContent(prompt);
+        const result = await model.generateContent(systemPrompt);
         const response = await result.response;
         const text = response.text();
 
@@ -80,6 +94,7 @@ export async function POST(req: Request) {
         }
 
         // 3. Save to DB (Learn)
+        // Only save meaningful answers, not short chitchat if possible, but for now save all AI interactions.
         const newId = db.questions.length > 0 ? Math.max(...db.questions.map(q => q.id)) + 1 : 1;
 
         const newQuestion: Question = {
