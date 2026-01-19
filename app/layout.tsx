@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "JobReady.io | Master Your Interview",
     description: "The fastest way to prepare for tech interviews. precise questions, modal-based browsing, and SEO-optimized content.",
+    icons: {
+        icon: '/icon.svg',
+    },
 };
 
 export default function RootLayout({
