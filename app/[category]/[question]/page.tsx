@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import SchemaJSON from '@/components/SchemaJSON';
 import CodeBlock from '@/components/CodeBlock';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,10 +71,10 @@ export default async function QuestionPage({ params }: { params: Promise<{ categ
                     </div>
 
                     {/* Answer */}
-                    <article className="prose" style={{ fontSize: '1.125rem', lineHeight: 1.8, color: '#334155', marginBottom: '2.5rem' }}>
-                        {question.answer.split('\n').map((line, i) => (
-                            <p key={i} style={{ marginBottom: '1rem' }}>{line}</p>
-                        ))}
+                    <article className="prose markdown-content" style={{ fontSize: '1.125rem', lineHeight: 1.8, color: '#334155', marginBottom: '2.5rem' }}>
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {question.answer}
+                        </ReactMarkdown>
                     </article>
 
                     {/* Image Section */}
