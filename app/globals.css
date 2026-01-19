@@ -10,8 +10,8 @@
     --secondary: #3b82f6;
     /* Accent Blue (lighter/brighter) */
 
-    --background-page: #f8fafc;
-    /* Cool Slate White */
+    --background-page: radial-gradient(circle at 50% 0%, #e0f2fe 0%, #f8fafc 70%, #f8fafc 100%);
+    /* Cool Blue Radial Gradient Spotlight */
     --background-card: #ffffff;
 
     --text-main: #0f172a;
