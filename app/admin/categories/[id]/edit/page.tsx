@@ -1,6 +1,6 @@
 import { getCategories } from '@/lib/db';
 import { updateCategory } from '@/lib/actions';
-import styles from '../../../../admin.module.css';
+import styles from '../../../admin.module.css';
 import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
