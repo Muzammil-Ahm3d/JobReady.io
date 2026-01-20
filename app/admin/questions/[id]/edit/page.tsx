@@ -5,9 +5,10 @@ import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-export default async function EditQuestion({ params }: { params: { id: string } }) {
+export default async function EditQuestion({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const allQuestions = await getQuestions();
-    const question = allQuestions.find(q => q.id === parseInt(params.id));
+    const question = allQuestions.find(q => q.id === parseInt(id));
     const categories = await getCategories();
 
     if (!question) {

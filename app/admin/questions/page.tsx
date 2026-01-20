@@ -9,11 +9,12 @@ export const dynamic = 'force-dynamic';
 export default async function QuestionsAdmin({
     searchParams,
 }: {
-    searchParams?: {
+    searchParams?: Promise<{
         q?: string;
-    };
+    }>;
 }) {
-    const q = searchParams?.q?.toLowerCase() || '';
+    const resolvedSearchParams = await searchParams;
+    const q = resolvedSearchParams?.q?.toLowerCase() || '';
     const allQuestions = await getQuestions();
     const questions = allQuestions.filter(quest =>
         quest.title.toLowerCase().includes(q) || quest.slug.toLowerCase().includes(q)

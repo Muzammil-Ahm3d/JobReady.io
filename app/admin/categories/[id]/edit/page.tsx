@@ -5,9 +5,10 @@ import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-export default async function EditCategory({ params }: { params: { id: string } }) {
+export default async function EditCategory({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const categories = await getCategories();
-    const category = categories.find(c => c.id === parseInt(params.id));
+    const category = categories.find(c => c.id === parseInt(id));
 
     if (!category) {
         redirect('/admin/categories');

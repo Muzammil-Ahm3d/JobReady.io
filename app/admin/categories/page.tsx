@@ -9,11 +9,12 @@ export const dynamic = 'force-dynamic';
 export default async function CategoriesAdmin({
     searchParams,
 }: {
-    searchParams?: {
+    searchParams?: Promise<{
         q?: string;
-    };
+    }>;
 }) {
-    const q = searchParams?.q?.toLowerCase() || '';
+    const resolvedSearchParams = await searchParams;
+    const q = resolvedSearchParams?.q?.toLowerCase() || '';
     const allCategories = await getCategories();
     const categories = allCategories.filter(cat =>
         cat.name.toLowerCase().includes(q) || cat.slug.toLowerCase().includes(q)
