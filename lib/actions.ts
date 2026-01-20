@@ -34,6 +34,25 @@ export async function deleteCategory(id: number) {
     revalidatePath('/');
 }
 
+export async function updateCategory(id: number, formData: FormData) {
+    const name = formData.get('name') as string;
+    const description = formData.get('description') as string;
+    const slug = name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, '');
+
+    const db = await getDB();
+    const category = db.categories.find(c => c.id === id);
+
+    if (category) {
+        category.name = name;
+        category.slug = slug;
+        category.description = description;
+
+        await saveDB(db);
+        revalidatePath('/');
+        redirect('/admin/categories');
+    }
+}
+
 // --- Questions ---
 
 export async function createQuestion(formData: FormData) {
@@ -73,4 +92,36 @@ export async function deleteQuestion(id: number) {
     await saveDB(db);
     // Revalidate all?
     revalidatePath('/');
+}
+
+export async function updateQuestion(id: number, formData: FormData) {
+    const title = formData.get('title') as string;
+    const answer = formData.get('answer') as string;
+    const categoryId = parseInt(formData.get('categoryId') as string);
+    const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, '');
+
+    const db = await getDB();
+    const question = db.questions.find(q => q.id === id);
+
+    if (question) {
+        question.title = title;
+        question.answer = answer;
+        question.categoryId = categoryId;
+        question.slug = slug;
+        question.useCases = formData.get('useCases') as string || undefined;
+        question.realTimeUseCases = formData.get('realTimeUseCases') as string || undefined;
+        question.imageUrl = formData.get('imageUrl') as string || undefined;
+        question.codeSnippet = formData.get('codeSnippet') as string || undefined;
+
+        await saveDB(db);
+
+        // Revalidate category page
+        const cat = db.categories.find(c => c.id === categoryId);
+        if (cat) revalidatePath(`/${cat.slug}`);
+
+        revalidatePath('/admin/questions');
+        revalidatePath('/');
+
+        redirect('/admin/questions');
+    }
 }

@@ -120,7 +120,8 @@ export async function POST(req: Request) {
         return NextResponse.json({
             answer: newQuestion.answer,
             source: 'ai',
-            question: newQuestion.title
+            question: newQuestion.title,
+            codeSnippet: newQuestion.codeSnippet
         });
 
     } catch (error: any) {
