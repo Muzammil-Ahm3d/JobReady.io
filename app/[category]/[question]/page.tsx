@@ -5,6 +5,7 @@ import CodeBlock from '@/components/CodeBlock';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 
 export const dynamic = 'force-dynamic';
 
@@ -72,7 +73,7 @@ export default async function QuestionPage({ params }: { params: Promise<{ categ
 
                     {/* Answer */}
                     <article className="prose markdown-content" style={{ fontSize: '1.125rem', lineHeight: 1.8, color: '#334155', marginBottom: '2.5rem' }}>
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
                             {question.answer}
                         </ReactMarkdown>
                     </article>
