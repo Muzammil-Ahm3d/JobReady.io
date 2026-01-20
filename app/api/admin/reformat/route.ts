@@ -12,9 +12,9 @@ export async function GET() {
             let newAnswer = q.answer;
 
             // 1. Replace "emoji bullets" with Markdown list items
-            // Matches: ☑️, ☝️, ✌️, 🤟, ✋, 👌, 🫱, 🫲, 🫳, 🫴, 👏, 🙌
+            // Matches: ☑️, ☝️, ✌️, 🤟, ✋, 👌, 🫱, 🫲, 🫳, 🫴, 👏, 🙌, 👉
             // We add a double newline before to ensure it starts a list, and a space after.
-            newAnswer = newAnswer.replace(/([☑️☝️✌️🤟✋👌🫱🫲🫳🫴👏🙌])/g, '\n- ');
+            newAnswer = newAnswer.replace(/([☑️☝️✌️🤟✋👌🫱🫲🫳🫴👏🙌👉])/g, '\n- ');
 
             // 2. Replace arrows with colon
             newAnswer = newAnswer.replace(/=>/g, ': ');

@@ -12,7 +12,7 @@ try {
         let newAnswer = q.answer;
 
         // Same regex logic as the API route
-        newAnswer = newAnswer.replace(/([☑️☝️✌️🤟✋👌🫱🫲🫳🫴👏🙌])/g, '\n- ');
+        newAnswer = newAnswer.replace(/([☑️☝️✌️🤟✋👌🫱🫲🫳🫴👏🙌👉])/g, '\n- ');
         newAnswer = newAnswer.replace(/=>/g, ': ');
         newAnswer = newAnswer.replace(/\*\*\*/g, '\n\n### ');
         newAnswer = newAnswer.replace(/\n\s*\n/g, '\n\n');
