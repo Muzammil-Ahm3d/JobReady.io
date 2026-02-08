@@ -113,6 +113,18 @@ export default async function QuestionPage({ params }: { params: Promise<{ categ
             {/* Main Content */}
             <main style={{ flex: 1, padding: '2rem', maxWidth: '100%', overflowX: 'hidden' }}>
                 <div style={{ maxWidth: '800px', margin: '0 auto', background: 'white', padding: '3rem', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                    <Link href="/" style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        marginBottom: '1.5rem',
+                        color: '#64748b',
+                        textDecoration: 'none',
+                        fontWeight: 500,
+                        fontSize: '0.9rem'
+                    }}>
+                        ← Back to Home
+                    </Link>
+
                     <SchemaJSON question={question} />
 
                     {/* Title */}

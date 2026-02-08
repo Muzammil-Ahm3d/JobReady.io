@@ -52,6 +52,17 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
+                <Link href="/" style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    marginBottom: '1rem',
+                    color: '#64748b',
+                    textDecoration: 'none',
+                    fontWeight: 500,
+                    fontSize: '0.9rem'
+                }}>
+                    ← Back to Home
+                </Link>
                 <h1 className={styles.title}>{category.name} Interview Questions</h1>
                 <p className={styles.desc}>{category.description}</p>
                 {q && <p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>Found {catQuestions.length} result(s) for "{q}"</p>}
