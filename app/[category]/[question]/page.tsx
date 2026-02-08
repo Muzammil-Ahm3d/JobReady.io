@@ -10,6 +10,51 @@ import remarkBreaks from 'remark-breaks';
 export const dynamic = 'force-dynamic';
 
 
+function getLanguage(categorySlug: string, title: string): string {
+    const slug = categorySlug.toLowerCase();
+    const t = title.toLowerCase();
+
+    // Python
+    if (['python', 'django', 'fast-api', 'flask-api', 'pyspark'].includes(slug) || t.includes('python')) return 'python';
+
+    // Java
+    if (['java', 'spring-framework', 'spring-data-jpa-hibernate', 'spring-boot', 'spring-cloud-microservices', 'core-java', 'java8-features'].includes(slug) || t.includes('java ')) return 'java';
+
+    // C# / .NET
+    if (['dotnet', 'asp-net', 'jpa-net'].includes(slug) || t.includes('c#') || t.includes('.net')) return 'csharp';
+
+    // SQL
+    if (slug === 'sql' || t.includes('sql')) return 'sql';
+
+    // HTML/CSS
+    if (slug === 'html' || t.includes('html')) return 'html';
+    if (slug === 'css' || t.includes('css')) return 'css';
+
+    // DevOps / CLI (Bash)
+    if (['git-github', 'jenkins', 'aws', 'azure', 'linux', 'ubuntu', 'shell'].includes(slug) || t.includes('git ') || t.includes('bash') || t.includes('cli') || t.includes('command')) return 'bash';
+
+    // Infrastructure / Config (YAML/JSON)
+    if (['kubernetes', 'docker', 'terraform', 'ansible'].includes(slug) || t.includes('yaml') || t.includes('yml')) return 'yaml';
+    if (t.includes('json') || t.includes('config')) return 'json';
+
+    // Data / PowerBI
+    if (['power-bi', 'dax', 'tableau'].includes(slug) || t.includes('dax')) return 'dax'; // specific highlighter support might vary, fallbacks to text usually
+
+    // Other Languages
+    if (['go', 'golang'].includes(slug)) return 'go';
+    if (['ruby', 'rails'].includes(slug)) return 'ruby';
+    if (['php', 'laravel'].includes(slug)) return 'php';
+    if (['swift', 'ios'].includes(slug)) return 'swift';
+    if (['kotlin', 'android'].includes(slug)) return 'kotlin';
+    if (['rust'].includes(slug)) return 'rust';
+    if (['scala', 'spark'].includes(slug)) return 'scala';
+
+    // JavaScript / TypeScript (default ecosystem)
+    if (['javascript', 'react-js', 'redux', 'node-js', 'express-js', 'restful-api', 'microservices', 'jwt', 'axios', 'es6-features'].includes(slug) || t.includes('javascript') || t.includes('react') || t.includes('node') || t.includes('js')) return 'javascript';
+
+    return 'javascript';
+}
+
 export default async function QuestionPage({ params }: { params: Promise<{ category: string; question: string }> }) {
     const { category: categorySlug, question: questionSlug } = await params;
     const questions = await getQuestions(categorySlug);
@@ -102,7 +147,10 @@ export default async function QuestionPage({ params }: { params: Promise<{ categ
                             <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#0f172a', marginBottom: '1rem' }}>
                                 Implementation
                             </h3>
-                            <CodeBlock code={question.codeSnippet} />
+                            <CodeBlock
+                                code={question.codeSnippet}
+                                language={getLanguage(categorySlug, question.title)}
+                            />
                         </div>
                     )}
 
