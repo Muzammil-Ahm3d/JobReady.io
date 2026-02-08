@@ -21,7 +21,14 @@ function getLanguage(categorySlug: string, title: string): string {
     if (['java', 'spring-framework', 'spring-data-jpa-hibernate', 'spring-boot', 'spring-cloud-microservices', 'core-java', 'java8-features'].includes(slug) || t.includes('java ')) return 'java';
 
     // C# / .NET
-    if (['dotnet', 'asp-net', 'jpa-net'].includes(slug) || t.includes('c#') || t.includes('.net')) return 'csharp';
+    if (['dotnet', 'asp-net', 'jpa-net', 'csharp'].includes(slug) || t.includes('c#') || t.includes('.net')) return 'csharp';
+
+    // C++
+    if (['cpp', 'c++'].includes(slug) || t.includes('c++') || t.includes('cpp')) return 'cpp';
+
+    // C
+    // We check for " c " with spaces or at start/end to avoid matching inside words like "react"
+    if (slug === 'c' || t === 'c' || t.startsWith('c ') || t.endsWith(' c') || t.includes(' c ') || t.includes('c language') || t.includes('c programming')) return 'c';
 
     // SQL
     if (slug === 'sql' || t.includes('sql')) return 'sql';
