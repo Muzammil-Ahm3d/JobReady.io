@@ -181,7 +181,21 @@ export default async function QuestionPage({ params }: { params: Promise<{ categ
                                     <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                         💡 Use Cases
                                     </h3>
-                                    <p style={{ color: '#475569', whiteSpace: 'pre-line' }}>{question.useCases}</p>
+                                    <div style={{ color: '#475569' }}>
+                                        {Array.isArray(question.useCases) ? (
+                                            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', margin: 0 }}>
+                                                {question.useCases.map((useCase, index) => (
+                                                    <li key={index} style={{ marginBottom: '0.5rem' }}>
+                                                        <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{useCase}</ReactMarkdown>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <div className="prose markdown-content">
+                                                <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{question.useCases}</ReactMarkdown>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             )}
 
@@ -190,7 +204,21 @@ export default async function QuestionPage({ params }: { params: Promise<{ categ
                                     <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                         🚀 Real-Time Examples
                                     </h3>
-                                    <p style={{ color: '#475569', whiteSpace: 'pre-line' }}>{question.realTimeUseCases}</p>
+                                    <div style={{ color: '#475569' }}>
+                                        {Array.isArray(question.realTimeUseCases) ? (
+                                            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', margin: 0 }}>
+                                                {question.realTimeUseCases.map((example, index) => (
+                                                    <li key={index} style={{ marginBottom: '0.5rem' }}>
+                                                        <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{example}</ReactMarkdown>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <div className="prose markdown-content">
+                                                <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{question.realTimeUseCases}</ReactMarkdown>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             )}
                         </div>

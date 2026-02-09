@@ -20,8 +20,8 @@ export type Question = {
     slug: string;
     answer: string;
     displayOrder: number;
-    useCases?: string;
-    realTimeUseCases?: string;
+    useCases?: string | string[];
+    realTimeUseCases?: string | string[];
     imageUrl?: string;
     codeSnippet?: string;
 };

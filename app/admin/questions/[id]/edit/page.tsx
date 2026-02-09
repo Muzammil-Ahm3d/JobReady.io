@@ -45,11 +45,21 @@ export default async function EditQuestion({ params }: { params: Promise<{ id: s
                 </div>
                 <div>
                     <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Use Cases (Optional)</label>
-                    <textarea name="useCases" rows={3} defaultValue={question.useCases} style={{ width: '100%', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '6px' }} />
+                    <textarea
+                        name="useCases"
+                        rows={3}
+                        defaultValue={Array.isArray(question.useCases) ? question.useCases.join('\n') : question.useCases}
+                        style={{ width: '100%', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '6px' }}
+                    />
                 </div>
                 <div>
                     <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Real Time Use Cases (Optional)</label>
-                    <textarea name="realTimeUseCases" rows={3} defaultValue={question.realTimeUseCases} style={{ width: '100%', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '6px' }} />
+                    <textarea
+                        name="realTimeUseCases"
+                        rows={3}
+                        defaultValue={Array.isArray(question.realTimeUseCases) ? question.realTimeUseCases.join('\n') : question.realTimeUseCases}
+                        style={{ width: '100%', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '6px' }}
+                    />
                 </div>
                 <button type="submit" className={styles.button} style={{ alignSelf: 'flex-start' }}>Update Question</button>
             </form>
