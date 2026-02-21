@@ -145,15 +145,16 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    height: auto;
+    position: relative;
     padding-top: 0.5rem;
+    gap: 1rem;
   }
 
   .logo {
-    order: 2;
     margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
   .searchContainer {
@@ -163,9 +164,10 @@
   }
 
   .toggleButton {
-    position: static;
-    order: 1;
-    transform: none;
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    z-index: 10;
   }
 }
 
