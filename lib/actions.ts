@@ -60,6 +60,7 @@ export async function createQuestion(formData: FormData) {
     const answer = formData.get('answer') as string;
     const categoryId = parseInt(formData.get('categoryId') as string);
     const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, '');
+    const displayOrderRaw = formData.get('displayOrder') as string;
 
     const db = await getDB();
     const newQ: Question = {
@@ -68,7 +69,7 @@ export async function createQuestion(formData: FormData) {
         slug,
         answer,
         categoryId,
-        displayOrder: db.questions.length + 1,
+        displayOrder: displayOrderRaw ? parseInt(displayOrderRaw) : db.questions.length + 1,
         useCases: formData.get('useCases') as string || undefined,
         realTimeUseCases: formData.get('realTimeUseCases') as string || undefined,
         imageUrl: formData.get('imageUrl') as string || undefined,
@@ -108,6 +109,8 @@ export async function updateQuestion(id: number, formData: FormData) {
         question.answer = answer;
         question.categoryId = categoryId;
         question.slug = slug;
+        const displayOrderRaw = formData.get('displayOrder') as string;
+        if (displayOrderRaw) question.displayOrder = parseInt(displayOrderRaw);
         question.useCases = formData.get('useCases') as string || undefined;
         question.realTimeUseCases = formData.get('realTimeUseCases') as string || undefined;
         question.imageUrl = formData.get('imageUrl') as string || undefined;

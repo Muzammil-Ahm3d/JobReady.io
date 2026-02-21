@@ -10,6 +10,50 @@ import remarkBreaks from 'remark-breaks';
 export const dynamic = 'force-dynamic';
 
 
+import { Metadata } from 'next';
+
+type Props = {
+    params: Promise<{ category: string; question: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { category, question: questionSlug } = await params;
+    const questions = await getQuestions(category);
+    const question = questions.find(q => q.slug === questionSlug.toLowerCase());
+
+    if (!question) {
+        return {
+            title: 'Question Not Found | JobReady.io',
+            robots: { index: false, follow: false },
+        };
+    }
+
+    // Clean up text for description (remove markdown if possible, or just take raw)
+    // Simple truncation for now. In a real app, use a markdown stripper.
+    const description = question.answer.slice(0, 160).replace(/[#*`_]/g, '') + '...';
+
+    return {
+        title: `${question.title} - ${category.charAt(0).toUpperCase() + category.slice(1)} Interview Question`,
+        description: description,
+        openGraph: {
+            title: question.title,
+            description: description,
+            type: 'article',
+            url: `https://jobready.io/${category}/${questionSlug}`,
+            publishedTime: new Date().toISOString(), // Mock publish time or add to DB
+            authors: ['JobReady.io'],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: question.title,
+            description: description,
+        },
+        alternates: {
+            canonical: `https://jobready.io/${category}/${questionSlug}`,
+        },
+    };
+}
+
 function getLanguage(categorySlug: string, title: string): string {
     const slug = categorySlug.toLowerCase();
     const t = title.toLowerCase();

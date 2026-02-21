@@ -14,18 +14,39 @@ type Props = {
 
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
     const { category } = await params;
+
+    // Capitalize category for nice display
+    const categoryName = category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     const { q } = await searchParams;
 
     if (q) {
         return {
-            title: `Search results for "${q}" in ${category} - JobReady.io`,
+            title: `Search results for "${q}" in ${categoryName} - JobReady.io`,
             robots: { index: false, follow: false },
         };
     }
 
+    const title = `Top ${categoryName} Interview Questions & Answers [${new Date().getFullYear()}]`;
+    const description = `Prepare for your ${categoryName} interview with our curated list of top interview questions and answers. Master ${categoryName} concepts and ace your technical interview.`;
+
     return {
-        title: `${category.charAt(0).toUpperCase() + category.slice(1)} Interview Questions`,
-        description: `Top interview questions for ${category}`,
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            type: 'article',
+            section: categoryName,
+            url: `https://jobready.io/${category}`,
+        },
+        twitter: {
+            card: 'summary',
+            title,
+            description,
+        },
+        alternates: {
+            canonical: `https://jobready.io/${category}`,
+        },
     };
 }
 

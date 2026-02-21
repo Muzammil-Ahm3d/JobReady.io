@@ -156,7 +156,7 @@ export async function getQuestions(categorySlug?: string) {
     // Attach category slug for use in UI links
     return items.map(q => {
         const cat = db.categories.find(c => c.id === q.categoryId);
-        return { ...q, categorySlug: cat?.slug || '' };
+        return { ...q, categorySlug: cat?.slug || '', categoryName: cat?.name || '' };
     });
 }
 

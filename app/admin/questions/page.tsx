@@ -3,6 +3,7 @@ import { deleteQuestion } from '@/lib/actions';
 import Link from 'next/link';
 import styles from '../admin.module.css';
 import SearchInput from '../components/SearchInput';
+import DeleteButton from '../components/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,9 +48,7 @@ export default async function QuestionsAdmin({
                                     <Link href={`/admin/questions/${q.id}/edit`} style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 500 }}>
                                         Update
                                     </Link>
-                                    <form action={deleteQuestion.bind(null, q.id)}>
-                                        <button type="submit" style={{ cursor: 'pointer', color: '#ef4444', background: 'transparent', border: 'none', fontWeight: 500 }}>Delete</button>
-                                    </form>
+                                    <DeleteButton action={deleteQuestion.bind(null, q.id)} />
                                 </td>
                             </tr>
                         ))}
