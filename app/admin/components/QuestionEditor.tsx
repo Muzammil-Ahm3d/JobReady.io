@@ -186,7 +186,22 @@ export default function QuestionEditor({
                                     {block.type === 'text' && (
                                         <textarea
                                             value={block.value}
-                                            onChange={(e) => updateBlock(block.id, e.target.value)}
+                                            onChange={(e) => {
+                                                updateBlock(block.id, e.target.value);
+                                                e.target.style.height = 'auto';
+                                                e.target.style.height = `${e.target.scrollHeight}px`;
+                                            }}
+                                            onFocus={(e) => {
+                                                e.target.style.height = 'auto';
+                                                e.target.style.height = `${e.target.scrollHeight}px`;
+                                                e.target.style.overflow = 'hidden';
+                                                e.target.style.resize = 'none';
+                                            }}
+                                            onBlur={(e) => {
+                                                e.target.style.height = '150px';
+                                                e.target.style.overflow = 'auto';
+                                                e.target.style.resize = 'vertical';
+                                            }}
                                             placeholder="Write content... (Markdown: **bold**, *italic*, - lists)"
                                             className={styles.sectionTextarea}
                                             rows={4}
@@ -202,7 +217,22 @@ export default function QuestionEditor({
                                             </div>
                                             <textarea
                                                 value={block.value}
-                                                onChange={(e) => updateBlock(block.id, e.target.value)}
+                                                onChange={(e) => {
+                                                    updateBlock(block.id, e.target.value);
+                                                    e.target.style.height = 'auto';
+                                                    e.target.style.height = `${e.target.scrollHeight}px`;
+                                                }}
+                                                onFocus={(e) => {
+                                                    e.target.style.height = 'auto';
+                                                    e.target.style.height = `${e.target.scrollHeight}px`;
+                                                    e.target.style.overflow = 'hidden';
+                                                    e.target.style.resize = 'none';
+                                                }}
+                                                onBlur={(e) => {
+                                                    e.target.style.height = '150px';
+                                                    e.target.style.overflow = 'auto';
+                                                    e.target.style.resize = 'vertical';
+                                                }}
                                                 placeholder="// Paste your code here..."
                                                 className={styles.sectionCodeArea}
                                                 rows={4}
