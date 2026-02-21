@@ -78,6 +78,12 @@
   border-color: var(--primary);
 }
 
+.navLinkActive {
+  color: #ffffff;
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
 .searchWrapper {
   width: 100%;
   max-width: 500px;
@@ -136,31 +142,30 @@
 /* Mobile layout adjustments */
 @media (max-width: 768px) {
   .topRow {
-    grid-template-columns: 1fr;
-    /* Stack vertically on mobile */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     height: auto;
-    /* Allow height to grow */
-    padding-top: 2.5rem;
-    /* Make space for the absolute toggle button */
+    padding-top: 0.5rem;
   }
 
   .logo {
-    justify-content: center;
-    grid-column: 1;
+    order: 2;
+    margin: 0 auto;
   }
 
   .searchContainer {
     width: 100%;
-    margin-left: 0;
-    grid-column: 1;
-    justify-content: center;
+    order: 3;
+    margin-top: 0.5rem;
   }
 
   .toggleButton {
-    top: 0.5rem;
-    /* Adjust top position for mobile */
-    left: 0;
+    position: static;
+    order: 1;
+    transform: none;
   }
 }
 
@@ -174,10 +179,6 @@
 }
 
 .toggleButton {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,16 +186,12 @@
   border: none;
   cursor: pointer;
   color: var(--text-foreground);
-  /* Cleaner color */
   transition: all 0.2s;
   padding: 0.5rem;
   border-radius: 8px;
-  /* Slightly rounded square */
   z-index: 10;
   width: 40px;
-  /* Fixed width */
   height: 40px;
-  /* Fixed height */
 }
 
 .toggleButton:hover {

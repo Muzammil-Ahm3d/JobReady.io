@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import styles from './Header.module.css';
@@ -16,6 +17,17 @@ type Category = {
 
 export default function HeaderContent({ categories }: { categories: Category[] }) {
     const [isOpen, setIsOpen] = useState(true);
+    const pathname = usePathname();
+
+    useEffect(() => {
+        // Only run on client-side
+        if (typeof window !== 'undefined') {
+            // Check if mobile view based on CSS breakpoint (768px matches the CSS)
+            if (window.innerWidth <= 768) {
+                setIsOpen(false);
+            }
+        }
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -39,9 +51,18 @@ export default function HeaderContent({ categories }: { categories: Category[] }
 
             {isOpen && (
                 <nav className={styles.nav}>
-                    {categories.map(cat => (
-                        <Link key={cat.id} href={`/${cat.slug}`} className={styles.navLink}>{cat.name}</Link>
-                    ))}
+                    {categories.map(cat => {
+                        const isActive = pathname === `/${cat.slug}`;
+                        return (
+                            <Link
+                                key={cat.id}
+                                href={`/${cat.slug}`}
+                                className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
+                            >
+                                {cat.name}
+                            </Link>
+                        );
+                    })}
                 </nav>
             )}
         </div>
